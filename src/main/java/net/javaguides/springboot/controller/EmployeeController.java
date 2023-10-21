@@ -24,12 +24,17 @@ public class EmployeeController {
     // display list of employees
     // GetMapping odkazuje na hlavnu webovu stranku, teda /
     @GetMapping("/")
-    public String viewEmployeesPage(Model model) {
-        // listEmployees je vlastne to, co sa zobrazi index.html v resources/templates
+    public String viewEmployeesPage() {
+        return "index";
+    }
+
+    @GetMapping("/showAll")
+    public String showAll(Model model) {
+        // listEmployees je vlastne to, co sa zobrazi show_all.html v resources/templates
         // v prikaze <tr th:each="employee:${listEmployees}">
         model.addAttribute("listEmployees", employeeService.getAllEmployees());
-        // return "index" sa odkazuje na subor index.html
-        return "index";
+        // return "index" sa odkazuje na subor show_all.html
+        return "show_all";
     }
 
     @GetMapping("/showNewEmployeeForm")
@@ -53,14 +58,14 @@ public class EmployeeController {
     // koresponduje s <form action="#" th:action="@{/saveEmployee}" th:object="${employee}" v subore new_employee.html
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.saveEmployee(employee);
-        return "redirect:/";
+        return "redirect:/showAll";
     }
 
     @PostMapping("/saveCompany")
     // koresponduje s <form action="#" th:action="@{/saveEmployee}" th:object="${employee}" v subore new_employee.html
     public String saveCompany(@ModelAttribute("company") Company company) {
         companyService.saveCompany(company);
-        return "redirect:/";
+        return "redirect:/showAll";
     }
 
     @GetMapping("/showFormForUpdate/{id}")
@@ -76,6 +81,22 @@ public class EmployeeController {
     @GetMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable (value="id") long id) {
         this.employeeService.deleteEmployeeById(id);
-        return "redirect:/";
+        return "redirect:/showAll";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
+    }
+
+    @GetMapping("/contact")
+    public String contact() {
+        return "contact";
+    }
+
 }

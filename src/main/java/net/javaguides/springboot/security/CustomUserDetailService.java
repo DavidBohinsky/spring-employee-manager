@@ -21,7 +21,8 @@ public class CustomUserDetailService implements UserDetailsService {
         if (userM == null) {
             throw new UsernameNotFoundException(username);
         }
-        UserDetails user = User.withUsername(userM.getUsername()).password(userM.getPassword()).authorities("USER").build();
+        UserDetails user = User.withUsername(userM.getUsername()).password(userM.getPassword()).authorities("USER").build(); // heslo je siftovane Bcrypt, https://bcrypt-generator.com/
+        // napr. slovo heslo123 reprezentuje $2a$12$hM8V5ss.KaaT5PtP8vScSeIQ5GwEvwNteuX1vxigBPTgIcVo88IuC
         return user;
     }
 }

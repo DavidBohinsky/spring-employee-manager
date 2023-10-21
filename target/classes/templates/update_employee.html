@@ -29,7 +29,6 @@
 
 
         <select class="form-control mb-4 col-4" id="exampleSelect1" th:field="*{company.id}">
-            <option value="0">Company</option>
             <option th:each="comp:${companies}" th:selected="(${comp.id} == *{company.id})" th:text="${comp.name}"
                     th:value="${comp.id}"></option>
         </select>
@@ -40,7 +39,7 @@
 
     <hr>
 
-    <a th:href="@{/}"> Back to Employee List</a>
+    <a th:href = "@{/showAll}">Back to Employee List</a>
 </div>
 </body>
 </html>

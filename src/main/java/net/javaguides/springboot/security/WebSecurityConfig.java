@@ -35,13 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Override
+/*    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
-    }
+    }*/
 
-  /*
-    @Override
+/*    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().
                 antMatchers("/", "/login").permitAll()
@@ -52,6 +51,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+    }*/
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().
+                antMatchers("/", "/login", "/about", "/contact").permitAll()
+                .antMatchers("/showAll", "/showNewEmployeeForm", "/showNewCompanyForm", "/saveEmployee", "/saveCompany", "/showFormForUpdate", "deleteEmployee").authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
-   */
 }
