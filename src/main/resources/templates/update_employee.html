@@ -13,10 +13,8 @@
     <hr>
     <h2>Update Employee</h2>
 
-    <form action="#" method="POST" th:action="@{/saveEmployee}"
-          th:object="${employee}">
+    <form method="post" th:action="@{/updateEmployeeForm}" th:object="${employee}">
 
-        <!-- Add hidden form field to handle update -->
         <input th:field="*{id}" type="hidden"/>
 
         <input class="form-control mb-4 col-4" th:field="*{firstName}" type="text">
@@ -24,6 +22,8 @@
         <input class="form-control mb-4 col-4" th:field="*{lastName}" type="text">
 
         <input class="form-control mb-4 col-4" th:field="*{email}" type="text">
+
+        <textarea class="form-control mb-4 col-4" th:field="*{bio}" type="text"> </textarea>
 
         <input class="form-control mb-4 col-4" placeholder="Employee Birthday" th:field="*{birthdayDate}" type="date">
 
@@ -34,6 +34,7 @@
         </select>
 
         <button class="btn btn-info col-2" type="submit"> Update Employee</button>
+
 
     </form>
 

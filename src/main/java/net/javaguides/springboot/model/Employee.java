@@ -1,13 +1,8 @@
 package net.javaguides.springboot.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -15,23 +10,40 @@ import java.util.Date;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+
     @Column(name="first_name")
-    private String firstName;
+    public String firstName;
     @Column(name="last_name")
-    private String lastName;
+    public String lastName;
 
     @Column(name="email")
-    private String email;
+    public String email;
 
     @Column(name="birthday_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthdayDate;
+    public Date birthdayDate;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="company_id")
-    private Company company;
+    public Company company;
 
+
+    @Column(columnDefinition = "TEXT")
+    public String bio;
+
+
+    @Column(name = "Image")
+    public String imageFilename;
+
+    public String getImageFilename() {
+        return imageFilename;
+    }
+
+    public void setImageFilename(String imageFile) {
+        this.imageFilename = imageFile;
+    }
 
     public Date getBirthdayDate() {
         return birthdayDate;
@@ -57,11 +69,11 @@ public class Employee {
         this.company = company;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -88,4 +100,9 @@ public class Employee {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getbio() {return bio;}
+
+    public void setbio(String bio) {this.bio = bio;}
+
 }

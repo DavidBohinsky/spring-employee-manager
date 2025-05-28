@@ -7,7 +7,15 @@ import net.javaguides.springboot.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.File;
+import java.io.IOException;
 
 // Musi byt anotacia Controller, aby sa vedel spustit
 @Controller
@@ -54,22 +62,54 @@ public class EmployeeController {
         return "new_company";
     }
 
-    @PostMapping("/saveEmployee")
-    // koresponduje s <form action="#" th:action="@{/saveEmployee}" th:object="${employee}" v subore new_employee.html
-    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    @PostMapping("/updateEmployeeForm")
+    public String updateEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.saveEmployee(employee);
         return "redirect:/showAll";
     }
+
+
+    @PostMapping("/saveEmployee")
+    public String updateEmployee(@ModelAttribute("employee") Employee employee,
+                                 @RequestParam("imageFile") MultipartFile imageFile,
+                                 RedirectAttributes redirectAttributes) {
+        if (!imageFile.isEmpty()) {
+            try {
+                String uploadDir = System.getProperty("user.dir") + "/uploads"; // pevná cesta mimo Tomcat tmp
+                File dir = new File(uploadDir);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                String originalFilename = imageFile.getOriginalFilename();
+                String filename = System.currentTimeMillis() + "_" + originalFilename;
+                File destination = new File(uploadDir + "/" + filename);
+
+                imageFile.transferTo(destination);
+                employee.setImageFilename(filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // Ulož zamestnanca
+            employeeService.saveEmployee(employee);
+
+        }
+        return "redirect:/showAll";
+    }
+
+
+
 
     @PostMapping("/saveCompany")
     // koresponduje s <form action="#" th:action="@{/saveEmployee}" th:object="${employee}" v subore new_employee.html
     public String saveCompany(@ModelAttribute("company") Company company) {
         companyService.saveCompany(company);
-        return "redirect:/showAll";
+        return "redirect:/show_all";
     }
 
+
     @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable(value="id") long userid, Model model) {
+    public String showFormForUpdate(@PathVariable(value = "id") long userid, Model model) {
         // get employee from the service
         Employee employee = employeeService.getEmployeeById(userid);
         // set employee as a model attribute to pre-populate the form
@@ -79,10 +119,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/deleteEmployee/{id}")
-    public String deleteEmployee(@PathVariable (value="id") long id) {
+    public String deleteEmployee(@PathVariable(value = "id") long id) {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/showAll";
     }
+
 
     @GetMapping("/login")
     public String login() {
@@ -100,3 +141,7 @@ public class EmployeeController {
     }
 
 }
+
+
+
+
