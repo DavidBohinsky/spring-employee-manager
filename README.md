@@ -1,7 +1,4 @@
-# spring-employee-manager
-employee management system
-
-# Spring Boot Employee Management App
+# Employee management app
 
 This is a simple Java web application developed as part of a **Java Junior Developer course**. It demonstrates how to build a CRUD-based system using:
 
