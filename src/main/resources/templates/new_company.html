@@ -14,14 +14,13 @@
     <hr>
     <h2>Save Company</h2>
 
-    <form action="#" th:action="@{/saveCompany}" th:object="${company}"
-          method="POST">
+    <form action="#" th:action="@{/saveCompany}" th:object="${company}" method="POST">
         <input type="text" th:field="*{name}"
                placeholder="Company Name" class="form-control mb-4 col-4">
         <button type="submit" class="btn btn-info col-2"> Save Company</button>
     </form>
     <hr>
-    <a th:href = "@{/showall}">Back to Employee List</a>
+    <a th:href = "@{/showAll}">Back to Employee List</a>
 </div>
 </body>
 </html>

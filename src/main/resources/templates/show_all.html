@@ -39,7 +39,8 @@
                 <th>Email</th>
                 <th>Birthday</th>
                 <th>Company</th>
-                <th>Bio & Photo</th>
+                <th>Bio</th>
+                <th>Photo</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -54,13 +55,13 @@
                 <td th:text="${employee.company?.name} ?: 'N/A'"></td>
                 <td th:text="${employee.bio} ?: 'No bio available'"></td>
 
+                <td>
                 <th:block th:if="${employee.imageFilename != null}">
                     <img th:src="@{'/uploads/' + ${employee.imageFilename}}"
                          class="employee-photo mr-2"
-                         width="100" height="100" alt="Employee photo"
-                         th:text="${employee.bio} ?: 'No bio available'">
+                         width="100" height="100" alt="Employee photo">
                 </th:block>
-
+                </td>
                 <td>
                     <div class="btn-group" role="group">
                         <a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}"
@@ -84,6 +85,13 @@
             <i class="fas fa-sign-out-alt"></i> Sign Out
         </button>
     </form>
+
+    <form th:action="@{/}" class="mt-4">
+        <button type="submit" class="btn btn-outline-secondary">
+            <i class="fas fa-sign-out-alt"></i> Back to Main Page
+        </button>
+    </form>
+
 </div>
 
 <!-- Font Awesome for icons -->
